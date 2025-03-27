@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  distDir: "build", // Move `distDir` inside nextConfig
+  distDir: '.next',
 };
 
 export default nextConfig;
