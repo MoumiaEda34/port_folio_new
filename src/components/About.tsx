@@ -8,23 +8,24 @@ import StorageIcon from "@mui/icons-material/Storage";
 import WebIcon from "@mui/icons-material/Web";
 import ApiIcon from "@mui/icons-material/Api";
 
-interface Skill {
-  name: string;
-  icon: keyof typeof iconComponents;
-  color: string;
-}
+const about = {
+  name: "Moumita Ahamed",
+  dob: "January 15, 1995",
+  location: "Kolkata, India",
+  email: "moumita@example.com",
+  phone: "+91 9876543210",
+  linkedin: "https://linkedin.com/in/moumita",
+  description:
+    "I am a passionate full-stack developer with expertise in JavaScript, React.js, PHP, and backend technologies. I love building high-performance, scalable web applications.",
+  skills: [
+    { name: "JavaScript (ES6+)", icon: "CodeIcon", color: "text-yellow-500" },
+    { name: "React.js & Next.js", icon: "WebIcon", color: "text-blue-500" },
+    { name: "PHP & Laravel", icon: "StorageIcon", color: "text-purple-500" },
+    { name: "API Development", icon: "ApiIcon", color: "text-green-500" },
+  ],
+};
 
-interface AboutData {
-  name: string;
-  dob: string;
-  location: string;
-  email: string;
-  phone: string;
-  linkedin: string;
-  description: string;
-  skills: Skill[];
-}
-
+// Icon Map
 const iconComponents = {
   WebIcon: WebIcon,
   CodeIcon: CodeIcon,
@@ -33,25 +34,15 @@ const iconComponents = {
 };
 
 export default function About() {
-  const [about, setAbout] = useState<AboutData | null>(null);
   const [typedText, setTypedText] = useState("");
   const [descIndex, setDescIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Typewriter Effect
   useEffect(() => {
-    fetch("http://localhost:5000/about")
-      .then((res) => res.json())
-      .then((data) => setAbout(data))
-      .catch((err) => console.error("Error fetching data:", err));
-  }, []);
-
-  // Typewriter Effect Logic
-  useEffect(() => {
-    if (!about) return;
-
     const fullText = about.description;
     const speed = isDeleting ? 40 : 80;
-    const pauseTime = 2000; // Pause before deleting
+    const pauseTime = 2000;
 
     let typingTimeout: NodeJS.Timeout;
 
@@ -72,15 +63,10 @@ export default function About() {
     }
 
     return () => clearTimeout(typingTimeout);
-  }, [about, descIndex, isDeleting]);
-
-  if (!about) return <p className="text-center text-gray-700">Loading...</p>;
+  }, [descIndex, isDeleting]);
 
   return (
-    <section
-      id="about"
-      className="min-h-screen bg-white text-gray-900 py-16 px-6"
-    >
+    <section id="about" className="min-h-screen bg-white text-gray-900 py-16 px-6">
       {/* Heading */}
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
@@ -91,7 +77,7 @@ export default function About() {
         About Me
       </motion.h2>
 
-      {/* About Me Description with Typewriter Effect */}
+      {/* Description with Typewriter Effect */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
